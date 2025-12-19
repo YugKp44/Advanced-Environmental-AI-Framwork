@@ -1,0 +1,467 @@
+{
+    "info": {
+        "_postman_id": "ecoai-framework-collection",
+        "name": "EcoAI Energy & Carbon Framework",
+        "description": "API collection for testing all endpoints of the AI Energy & Carbon Management Framework",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8080/api"
+        },
+        {
+            "key": "companyId",
+            "value": "{{companyId}}"
+        }
+    ],
+    "item": [
+        {
+            "name": "Companies",
+            "item": [
+                {
+                    "name": "Create Company",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"TechCorp AI Solutions\",\n    \"industry\": \"Technology\",\n    \"country\": \"United States\",\n    \"region\": \"US\",\n    \"baseAiPercentage\": 0.35,\n    \"electricityCostPerKwh\": 0.12,\n    \"currency\": \"USD\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Companies",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Company by ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Departments",
+            "item": [
+                {
+                    "name": "Create Department",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Machine Learning\",\n    \"team\": \"ML Engineering\",\n    \"product\": \"AI Platform\",\n    \"aiUsageWeight\": 0.85,\n    \"employeeCount\": 25\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/departments",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "departments"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Departments",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/departments",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "departments"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Energy Usage",
+            "item": [
+                {
+                    "name": "Record Energy Usage",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"totalKwh\": 500.5,\n    \"usageDate\": \"2024-12-19\",\n    \"region\": \"US\",\n    \"periodType\": \"DAILY\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/energy",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "energy"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Energy Usage",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/energy",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "energy"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Energy Trends",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/energy/trends?months=6",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "energy",
+                                "trends"
+                            ],
+                            "query": [
+                                {
+                                    "key": "months",
+                                    "value": "6"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Dashboard",
+            "item": [
+                {
+                    "name": "Get Full Dashboard",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/dashboard",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "dashboard"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get KPIs",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/dashboard/kpis",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "dashboard",
+                                "kpis"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Simulation",
+            "item": [
+                {
+                    "name": "Simulate Growth",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"growthPercent\": 20,\n    \"monthsAhead\": 12\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/simulate/growth",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "simulate",
+                                "growth"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Simulate Region Change",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"fromRegion\": \"IN\",\n    \"toRegion\": \"EU\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/simulate/region",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "simulate",
+                                "region"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Simulate Efficiency",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"efficiencyPercent\": 15\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/simulate/efficiency",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "simulate",
+                                "efficiency"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Analytics",
+            "item": [
+                {
+                    "name": "Get Forecast",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/analytics/forecast?months=3",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "analytics",
+                                "forecast"
+                            ],
+                            "query": [
+                                {
+                                    "key": "months",
+                                    "value": "3"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Year-over-Year",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/analytics/yoy",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "analytics",
+                                "yoy"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Alerts",
+            "item": [
+                {
+                    "name": "Get Active Alerts",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/alerts",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "alerts"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Insights",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/insights",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "insights"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Configure Threshold",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"metricType\": \"AI_USAGE_KWH\",\n    \"thresholdValue\": 15000,\n    \"message\": \"AI energy usage approaching monthly limit\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/companies/{{companyId}}/alerts/thresholds",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "companies",
+                                "{{companyId}}",
+                                "alerts",
+                                "thresholds"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Carbon",
+            "item": [
+                {
+                    "name": "Get Default Intensities",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/carbon/intensities",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "carbon",
+                                "intensities"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
