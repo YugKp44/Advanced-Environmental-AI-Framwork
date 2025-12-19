@@ -1,0 +1,24 @@
+# Render.com deployment config
+services:
+  # Backend
+  - type: web
+    name: ecoai-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/companies
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: CORS_ORIGINS
+        value: https://ecoai-frontend.onrender.com
+
+  # Frontend (Static Site)
+  - type: web
+    name: ecoai-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=31536000
