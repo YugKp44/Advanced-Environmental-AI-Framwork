@@ -10,13 +10,14 @@ const warmupStages = [
 ];
 
 const tips = [
-    "💡 Tip: This is a demo running on Render's free tier",
-    "☕ Grab a coffee - cold starts take about 30-60 seconds",
-    "🚀 In production, use paid hosting for instant response",
+    "💡 Running on Render's free tier - server spins down after inactivity",
+    "☕ Grab a coffee - cold starts can take 1-2 minutes",
     "🌍 Track your organization's carbon footprint in real-time",
     "⚡ Monitor energy consumption across all departments",
     "🎯 AI-powered insights help optimize energy efficiency",
     "📉 Reduce costs and environmental impact together",
+    "🔄 The server is spinning up - thanks for your patience!",
+    "🌱 Once loaded, the app will be fast until the next idle timeout",
 ];
 
 function ServerWarmup({ onReady, error, retryCount }) {
@@ -218,38 +219,23 @@ function ServerWarmup({ onReady, error, retryCount }) {
                     </p>
                 </div>
 
-                {/* Retry info */}
+                {/* Server spinning up info - shown after first retry */}
                 {retryCount > 0 && (
                     <div style={{
-                        background: 'rgba(245, 158, 11, 0.1)',
-                        border: '1px solid rgba(245, 158, 11, 0.2)',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        border: '1px solid rgba(16, 185, 129, 0.2)',
                         borderRadius: '12px',
                         padding: '12px',
                         marginBottom: '1.5rem',
                         fontSize: '0.85rem',
-                        color: '#f59e0b',
+                        color: '#10b981',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '8px'
                     }}>
-                        <span style={{ animation: 'spin 1s linear infinite' }}>⏳</span>
-                        Retry attempt {retryCount} - Server is waking up...
-                    </div>
-                )}
-
-                {/* Error state */}
-                {error && (
-                    <div style={{
-                        background: 'rgba(239, 68, 68, 0.1)',
-                        border: '1px solid rgba(239, 68, 68, 0.2)',
-                        borderRadius: '12px',
-                        padding: '12px',
-                        marginBottom: '1.5rem',
-                        fontSize: '0.85rem',
-                        color: '#ef4444'
-                    }}>
-                        ⚠️ Connection failed. Retrying automatically...
+                        <span style={{ animation: 'spin 1s linear infinite' }}>🔄</span>
+                        Server is spinning up on Render free tier... ({retryCount} checks)
                     </div>
                 )}
 
@@ -279,7 +265,7 @@ function ServerWarmup({ onReady, error, retryCount }) {
                     fontSize: '0.8rem',
                     color: '#4b5563'
                 }}>
-                    Estimated wait: 30-60 seconds on first load
+                    Using Render free tier - cold starts may take 1-2 minutes
                 </p>
 
                 {/* Eco stats decoration */}
