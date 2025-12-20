@@ -183,4 +183,10 @@ export const getOptimizationInsights = async (companyId) => {
     return response.data;
 };
 
+// ==================== Health Check API ====================
+export const checkServerHealth = async () => {
+    const response = await api.get('/companies', { timeout: 10000 });
+    return response.data;
+};
+
 export default api;

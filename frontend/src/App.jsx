@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import EnergyManagement from './pages/EnergyManagement'
@@ -7,17 +7,40 @@ import Simulation from './pages/Simulation'
 import Analytics from './pages/Analytics'
 import Alerts from './pages/Alerts'
 import Settings from './pages/Settings'
-import { getCompanies } from './services/api'
+import ServerWarmup from './components/ServerWarmup'
+import { getCompanies, checkServerHealth } from './services/api'
 import './App.css'
 
 function App() {
   const [companies, setCompanies] = useState([])
   const [selectedCompany, setSelectedCompany] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [serverReady, setServerReady] = useState(false)
+  const [serverError, setServerError] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
+
+  const checkServer = useCallback(async () => {
+    try {
+      const data = await checkServerHealth()
+      setServerReady(true)
+      setServerError(false)
+      setCompanies(data)
+      if (data.length > 0) {
+        setSelectedCompany(data[0])
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log('Server not ready, retrying...', error)
+      setServerError(true)
+      setRetryCount(prev => prev + 1)
+      // Retry after 3 seconds
+      setTimeout(checkServer, 3000)
+    }
+  }, [])
 
   useEffect(() => {
-    loadCompanies()
-  }, [])
+    checkServer()
+  }, [checkServer])
 
   const loadCompanies = async () => {
     try {
@@ -31,6 +54,17 @@ function App() {
     } finally {
       setLoading(false)
     }
+  }
+
+  // Show warmup screen while server is starting
+  if (!serverReady) {
+    return (
+      <ServerWarmup
+        onReady={() => setServerReady(true)}
+        error={serverError}
+        retryCount={retryCount}
+      />
+    )
   }
 
   if (loading) {
@@ -50,7 +84,7 @@ function App() {
             <span className="logo-icon">🌱</span>
             <span className="logo-text">EcoAI</span>
           </div>
-          
+
           <nav>
             <ul className="nav-menu">
               <li className="nav-item">
@@ -101,7 +135,7 @@ function App() {
           {/* Company Selector */}
           {companies.length > 0 && (
             <div className="company-selector">
-              <select 
+              <select
                 className="form-select"
                 value={selectedCompany?.id || ''}
                 onChange={(e) => {
